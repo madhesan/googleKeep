@@ -8,7 +8,7 @@ import HeaderBar from './HeaderBar';
 import NavList from './NavList';
 
 const drawerWidth = 240;
-
+ 
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -62,6 +62,8 @@ function SwipeDrawer() {
 
     return (
         <Box sx={{ display: 'flex' }}>
+
+            
             <HeaderBar
                 open={open}
                 handleDrawer={handleDrawer}
