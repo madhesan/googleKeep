@@ -1,21 +1,11 @@
-import { useRef, useContext } from 'react';
-import { Box, TextField, ClickAwayListener } from '@mui/material';
+import { useRef } from 'react';
+import { Box, ClickAwayListener } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { v4 as uuid } from 'uuid';
 import { useState } from "react";
 import axios from "axios";
-import PushPinIcon from '@mui/icons-material/PushPin';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import Snackbar from '@mui/material/Snackbar';
 const Container = styled(Box)`
     display: flex;
     flex-direction: column;
@@ -27,7 +17,6 @@ const Container = styled(Box)`
     min-height: 30px;
     padding: 10px 15px;
 `
-
 const note = {
     id: '',
     title: '',
@@ -36,26 +25,23 @@ const note = {
 
 const Form = () => {
     const User = localStorage.getItem("token");
-    console.log(User);
+    const GoogleId = localStorage.getItem("tokenId");
     const [showTextField, setShowTextField] = useState(false);
     const [erroe, setError] = useState(false);
     const [addNote, setAddNote] = useState({
         ...note, id: uuid(),
         text: "",
         title: "",
-        user1: User
-    });
+        user1: User,
+        googleuser: GoogleId
 
+    });
 
     const handleChange = ({ currentTarget: input }) => {
         setAddNote({ ...addNote, [input.name]: input.value });
     };
 
-
-
-
     const containerRef = useRef();
-
 
     const onTextAreaClick = () => {
         setShowTextField(true);
@@ -80,7 +66,7 @@ const Form = () => {
                 error.response.status >= 400 &&
                 error.response.status <= 500
             ) {
-                setError(error.response.addNote.message);//
+                setError(error.response.addNote.message);
             }
         }
 
@@ -90,8 +76,7 @@ const Form = () => {
     return (
 
         <ClickAwayListener>
-            <Container ref={containerRef} style={{ marginLeft: "400px" }}>
-
+            <Container ref={containerRef} style={{ marginLeft: "400px", marginTop: "10px" }}>
                 <form onSubmit={handleSubmit}>
                     <input
                         style={{
@@ -141,9 +126,12 @@ const Form = () => {
                     <button style={{
                         marginLeft: "500px",
                         marginTop: "10px",
-                        backgroundColor: "whitesmoke",
-                        border: "none"
-                    }} ><PushPinIcon  /></button>
+                        backgroundColor: "white",
+                        border: "none",
+                        shadow: "2px 2px",
+                    }} ><Fab color="primary" aria-label="add" >
+                            <AddIcon />
+                        </Fab></button>
                 </form>
             </Container>
         </ClickAwayListener>

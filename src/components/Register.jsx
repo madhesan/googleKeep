@@ -14,38 +14,38 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import axios from "axios";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignUp() {
-    const [data, setData] = useState({
-		email: "",
-		password: "",
-	});
-	const [error, setError] = useState("");
-	const navigate = useNavigate();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-	const handleChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
-	};
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const url = "http://localhost:8081/api/users";
-			const { data: res } = await axios.post(url, data);
-			navigate("/");
-			console.log(res.message);
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setError(error.response.data.message);
-			}
-		}
-	};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8081/api/users";
+      const { data: res } = await axios.post(url, data);
+      navigate("/");
+      console.log(res.message);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
 
 
   return (
@@ -77,7 +77,7 @@ export default function SignUp() {
               type="email"
               onChange={handleChange}
               value={data.email}
-         
+
             />
             <TextField
               margin="normal"
@@ -89,9 +89,9 @@ export default function SignUp() {
               id="password"
               autoComplete="current-password"
               onChange={handleChange}
-			value={data.password}
+              value={data.password}
             />
-          
+
             <Button
               type="submit"
               fullWidth
@@ -102,7 +102,7 @@ export default function SignUp() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/Signin" style={{textDecoration:"none"}}>
+                <Link to="/Signin" style={{ textDecoration: "none" }}>
                   {"Already have an account? Sign In"}
                 </Link>
               </Grid>

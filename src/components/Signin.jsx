@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,39 +12,35 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import {useNavigate } from "react-router-dom";
 import Login from './Login';
 const theme = createTheme();
 
 export default function SignIn() {
-    const [data, setData] = useState({ email: "", password: "" });
-	const [error, setError] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
-	const handleChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
-	};
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
 
-	const handleSubmit = async (e) => {
-		// window.location.reload();
-        // alert(`${data.firstName} Registered Successfully !!!!`)
-		e.preventDefault();
-		try {
-			const url = "http://localhost:8081/api/auth";
-			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token",res.data._id);
-			localStorage.setItem("name",res.data.firstName);
-			 //console.log(res.data._id);
-			window.location = "/home";
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setError(error.response.data.message);
-			}
-		}
-	};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8081/api/auth";
+      const { data: res } = await axios.post(url, data);
+      localStorage.setItem("token", res.data._id);
+      localStorage.setItem("name", res.data.firstName);
+      window.location = "/home";
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
 
 
   return (
@@ -78,7 +72,7 @@ export default function SignIn() {
               type="email"
               onChange={handleChange}
               value={data.email}
-         
+
             />
             <TextField
               margin="normal"
@@ -90,9 +84,9 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               onChange={handleChange}
-			value={data.password}
+              value={data.password}
             />
-          
+
             <Button
               type="submit"
               fullWidth
@@ -103,15 +97,15 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/Register"  style={{textDecoration:"none"}}>
+                <Link to="/Register" style={{ textDecoration: "none" }}>
                   Don't have an account? Sign Up
                 </Link>
+                <Login />
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Container>
-      <Login/>
     </ThemeProvider>
   );
 }

@@ -22,8 +22,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
 }));
 
-const Notes = () => {
-    const User = localStorage.getItem("token");
+const GoogleNotes = () => {
+    const GoogleId = localStorage.getItem("tokenId");
     const [noteList, setNoteList] = useState({
     });
 
@@ -31,7 +31,7 @@ const Notes = () => {
     const [newTitle, setNewTitle] = useState('');
 
     useEffect(() => {
-        Axios.get(`http://localhost:8081/api/users/read/${User}`).then((response) => {
+        Axios.get(`http://localhost:8081/api/users/read/${GoogleId}`).then((response) => {
             setNoteList(response.data);
             console.log(response);
         });
@@ -250,4 +250,4 @@ const Notes = () => {
     )
 }
 
-export default Notes;
+export default GoogleNotes;
